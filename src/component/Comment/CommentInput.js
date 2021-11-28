@@ -9,11 +9,6 @@ class CommentInput extends Component {
             username: '',
             comment: ''
         };
-
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handleUsernameBlur = this.handleUsernameBlur.bind(this);
-        this.handleCommentChange = this.handleCommentChange.bind(this);
-        this.handleComment = this.handleComment.bind(this);
     }
 
     componentWillMount() {
@@ -33,23 +28,23 @@ class CommentInput extends Component {
         if (username) this.setState({ username });
     }
 
-    handleUsernameChange(evt) {
+    handleUsernameChange = (evt) => {
         this.setState({
             username: evt.target.value
         });
     }
 
-    handleUsernameBlur() {
+    handleUsernameBlur = () => {
         this._saveUsername();
     }
 
-    handleCommentChange(evt) {
+    handleCommentChange = (evt) => {
         this.setState({
             comment: evt.target.value
         });
     }
 
-    handleComment() {
+    handleComment = () => {
         const { username, comment } = this.state;
         if (!username) {
             alert("please enter user name");
