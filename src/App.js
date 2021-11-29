@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Post from "./component/Post/Post";
 import './App.css';
 import Header from "./component/Header/Header";
-import Registiration from "./component/Login/Registiration";
+import Registration from "./component/Login/Registration";
 import LoginForm from "./component/Login/LoginForm";
 import Banner from "./component/Banner/Banner";
 import Footer from "./component/Footer/Footer";
@@ -17,7 +17,7 @@ const App = () => {
             <Switch>
                 <Route exact path="/" component={Banner} />
                 <Route exact path="/post" component={Post} />
-                <Route exact path="/register" component={Registiration} />
+                <Route exact path="/register" component={Registration} />
                 <Route exact path="/login" component={LoginForm} />
             </Switch>
             <Footer />

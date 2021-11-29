@@ -76,15 +76,6 @@ class Post extends Component {
     // user cannot post if he is not logged in in local storage
 
 
-
-
-
-
-
-
-
-
-
     render() {
         //get user name from local storage
         const user = JSON.parse(localStorage.getItem('users'));
@@ -121,8 +112,7 @@ class Post extends Component {
                                             </td>
                                             <td>
                                                 <i onClick={this.like} className="far fa-thumbs-up">{this.state.likes}</i>
-                                                <i onClick={this.deletePost} className="far fa-trash-alt"></i>                                                <i onClick={this.deletePost} className="far fa-trash-alt"></i>
-                                                {/*<i onClick={this.editPost} className="far fa-edit"></i>*/}
+                                                <i onClick={this.deletePost} className="far fa-trash-alt"/>
                                             </td>
 
 
