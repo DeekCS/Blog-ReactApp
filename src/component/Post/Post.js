@@ -39,16 +39,22 @@ class Post extends Component {
     // for pushing data to array
     handleSubmit = (e) => {
         e.preventDefault();
-
-        const {act, index, description, name, title, likes} = this.state;
-        const data = {act, index, description, name, title, likes};
-        this.setState({
-            datas: [...this.state.datas, data],
-        })
-        this.state.datas.push({act, index, description, name, title, likes})
-        localStorage.setItem('data', JSON.stringify(this.state.datas))
-        e.target.reset();
-        localStorage.setItem('data', JSON.stringify(this.state.datas))
+        // if user is not logged in cannot post
+        let user = JSON.parse(localStorage.getItem('users'));
+        if(user === null) {
+            alert("You are not logged in, Please Login To Post")
+            this.props.history.push('/register')
+        }else {
+            const {act, index, description, name, title, likes} = this.state;
+            const data = {act, index, description, name, title, likes};
+            this.setState({
+                datas: [...this.state.datas, data],
+            })
+            this.state.datas.push({act, index, description, name, title, likes})
+            localStorage.setItem('data', JSON.stringify(this.state.datas))
+            e.target.reset();
+            localStorage.setItem('data', JSON.stringify(this.state.datas))
+        }
 
     }
 
@@ -73,18 +79,35 @@ class Post extends Component {
         localStorage.setItem('data', JSON.stringify(data))
     }
 
-    // user cannot post if he is not logged in in local storage
+    //render user name if user is logged in
+    renderName = () => {
+        //get the user name from local storage
+        const user = JSON.parse(localStorage.getItem('users'));
+        if (user) {
+            return (
+                <div className="user-name">
+                    <h3>{user[0].username}</h3>
+                </div>
+            )
+        }else {
+            return (
+                <div className="user-name">
+                    <h3>Guest</h3>
+                </div>
+            )
+        }
+    }
 
 
     render() {
         //get user name from local storage
-        const user = JSON.parse(localStorage.getItem('users'));
+        // const user = JSON.parse(localStorage.getItem('users'));
         // console.log(user[0].username)
 
         return (
             <div className="container">
                 <h1 className="text-center">Posts</h1>
-                <h3>Welcome {user[0].username}</h3>
+                <h2>{this.renderName}</h2>
                 <form className="form" onSubmit={this.handleSubmit}>
                     <h2 className="heading ">Add a Post</h2>
                     <input type="text" placeholder="Enter your post title" name="title" onChange={this.handleChange}

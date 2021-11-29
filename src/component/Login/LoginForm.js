@@ -33,9 +33,13 @@ class LoginForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({
+            isSubmitted: true
+        })
+        const {username, password} = this.state;
         let userArr = JSON.parse(localStorage.getItem('users'));
 
-        let user = userArr.find(user => user.username === this.state.username && user.password === this.state.password);
+        let user = userArr.find(user => user.username === username && user.password === password);
         if (user) {
             this.setState({LoggedInID: user.id, isSubmitted:true})
             console.log("Successfully")

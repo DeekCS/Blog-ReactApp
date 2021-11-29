@@ -29,33 +29,36 @@ class Nav extends Component {
     }
     //show link s if user is logged in
 
-    handleLogin(e) {
-        if (this.state.isLoggedIn) {
+    handleLogin =() =>{
+        // localStorage.getItem("users") ? this.setState({ isLoggedIn: false }) : this.setState({ isLoggedIn: true });
+
+        if (!(this.state.isLoggedIn)) {
             return (
-                <Navigation.LinkContainer>
-                    <Navigation.Link to="/profile">Profile</Navigation.Link>
-                    <Navigation.Link to="/logout">Logout</Navigation.Link>
-                </Navigation.LinkContainer>
+            <NavLink activeClassName="active" to="/login">
+                <li>Logout</li>
+            </NavLink>
             );
-        } else {
+        } else if (this.state.isLoggedIn === true) {
             return (
-                <Navigation.LinkContainer>
-                    <Navigation.Link to="/login">Login</Navigation.Link>
-                    <Navigation.Link to="/signup">Signup</Navigation.Link>
-                </Navigation.LinkContainer>
+                <NavLink activeClassName="active" to="/register">
+                    <li>Login</li>
+                </NavLink>
             );
         }
-        // localStorage.getItem("user") ? this.setState({ isLoggedIn: false }) : this.setState({ isLoggedIn: true });
     }
 
     //logout user
+
     handleLogout(e) {
         e.preventDefault();
-        localStorage.removeItem("user");
-        this.setState({
-            isLoggedIn: false
-        });
-    }
+        localStorage.removeItem("users");
+        if(localStorage.getItem("user")){
+            this.setState({
+                isLoggedIn: false
+            });
+           this.history.push("/register");
+        }
+        }
 
 
 
@@ -88,10 +91,7 @@ class Nav extends Component {
                         <NavLink activeClassName="active" to="/post">
                             <li>BLOG</li>
                         </NavLink>
-                        <NavLink activeClassName="active" to="/login">
-                            <li>LOGIN</li>
-                        </NavLink>
-
+                        {this.handleLogin()}
                     </ul>
                 </nav>
             </Navigation>
