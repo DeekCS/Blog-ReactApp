@@ -50,6 +50,7 @@ class LoginForm extends React.Component {
 
     render() {
         return (
+            <div className="container">
                 <Form onSubmit={this.handleSubmit.bind(this)}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Username</Form.Label>
@@ -59,12 +60,14 @@ class LoginForm extends React.Component {
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" name="password" onChange={this.handleChange}/>
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button variant="primary" type="submit" className="w-25 mt-2">
                         Login
                     </Button>
-                    <p> Don't have an account? </p>
-                    <Link to="/register">Sign up</Link>
+                    <p className="mt-3"> Don't have an account?
+                    <Link to="/register" className="text-decoration-none"> Sign up</Link>
+                    </p>
                 </Form>
+            </div>
         )
     }
 }
