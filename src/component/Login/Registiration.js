@@ -78,7 +78,7 @@ class RegistrationForm extends Component{
                   </Form.Text>}
               </Form.Group>
               {
-                  this.state.password===this.state.confirmPassword&&<input className="btn btn-secondary" variant="primary" type="submit" value="Submit"/>
+                  this.state.password===this.state.confirmPassword&&<input className="btn btn-secondary" variant="primary" type="submit" value="Register"/>
               }
               <p className="mt-3">already have an account?
               <Link to="/login" className="text-decoration-none"> Login</Link>
