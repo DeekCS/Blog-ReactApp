@@ -73,15 +73,21 @@ class Post extends Component {
         localStorage.setItem('data', JSON.stringify(data))
     }
 
-    //make the likes visible after refresh
+    //
+
+
+
+
+
+
 
     render() {
         return (
-            <div className="">
-                <h1>Posts</h1>
+            <div className="container">
+                <h1 className="text-center">Posts</h1>
 
                 <form className="form" onSubmit={this.handleSubmit}>
-                    <h2 className="heading">Add a Post</h2>
+                    <h2 className="heading ">Add a Post</h2>
                     <input type="text" placeholder="Enter your post title" name="title" onChange={this.handleChange}
                            required/> <br/>
                     <input type="text" name="name" placeholder="Enter Your Name" onChange={this.handleChange} required/>

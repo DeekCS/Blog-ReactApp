@@ -17,7 +17,7 @@ const App = () => {
         <Router  >
             <Header />
             <Switch>
-                <Route exact path="/" component={Banner} />
+                <Route exact path="/Blog-ReactApp" component={Banner} />
                 <Route exact path="/post" component={Post} />
                 <Route exact path="/register" component={Registiration} />
                 <Route exact path="/login" component={LoginForm} />

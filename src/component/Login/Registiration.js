@@ -16,15 +16,13 @@ class RegistrationForm extends Component{
             isSubmitted: false,
             users: [],
         }
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChange = this.onChange.bind(this);
     }
 
         navigateToLogin = () => {
             this.props.history.push('/post');
         }
 
-        onSubmit(e){
+        onSubmit =(e) =>{
             e.preventDefault();
             let newArr = this.state.users;
             if (localStorage.getItem('users')) {
@@ -53,7 +51,7 @@ class RegistrationForm extends Component{
 
         }
 
-        onChange(e){
+        onChange =(e) =>{
         const {name, value} = e.target;
         this.setState({[name]: value});
         }
