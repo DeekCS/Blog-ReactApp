@@ -52,7 +52,7 @@ class Nav extends Component {
     handleLogout(e) {
         e.preventDefault();
         localStorage.removeItem("users");
-        if(localStorage.getItem("user")){
+        if(localStorage.getItem("users")){
             this.setState({
                 isLoggedIn: false
             });

@@ -1,6 +1,7 @@
 import React from 'react';
 // import './blog.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Link} from "react-router-dom";
 
 
 function BlogCards() {
@@ -15,9 +16,9 @@ function BlogCards() {
                     Ut eum similique repellat a laborum, rerum voluptates ipsam eos quo tempore
                     iusto dolore modi dolorum in pariatur. Incidunt repellendus praesentium
                     quae!</p>
-                <a href="" className="btn btn-outline-success btn-sm">Read More</a>
-                <a href="" className="btn btn-outline-danger btn-sm"><i
-                    className="far fa-heart" /></a>
+                <Link to="/post" className="btn btn-outline-success btn-sm">Read More</Link>
+                <Link to="/post" className="btn btn-outline-danger btn-sm"><i
+                    className="far fa-heart" /></Link>
             </div>
         </div>
     );
