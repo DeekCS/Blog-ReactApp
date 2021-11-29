@@ -73,7 +73,11 @@ class Post extends Component {
         localStorage.setItem('data', JSON.stringify(data))
     }
 
-    //
+    // user cannot post if he is not logged in in local storage
+
+
+
+
 
 
 
@@ -82,10 +86,14 @@ class Post extends Component {
 
 
     render() {
+        //get user name from local storage
+        const user = JSON.parse(localStorage.getItem('users'));
+        // console.log(user[0].username)
+
         return (
             <div className="container">
                 <h1 className="text-center">Posts</h1>
-
+                <h3>Welcome {user[0].username}</h3>
                 <form className="form" onSubmit={this.handleSubmit}>
                     <h2 className="heading ">Add a Post</h2>
                     <input type="text" placeholder="Enter your post title" name="title" onChange={this.handleChange}
@@ -113,7 +121,8 @@ class Post extends Component {
                                             </td>
                                             <td>
                                                 <i onClick={this.like} className="far fa-thumbs-up">{this.state.likes}</i>
-                                                <i onClick={this.deletePost} className="far fa-trash-alt"></i>
+                                                <i onClick={this.deletePost} className="far fa-trash-alt"></i>                                                <i onClick={this.deletePost} className="far fa-trash-alt"></i>
+                                                {/*<i onClick={this.editPost} className="far fa-edit"></i>*/}
                                             </td>
 
 

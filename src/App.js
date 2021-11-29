@@ -9,15 +9,13 @@ import LoginForm from "./component/Login/LoginForm";
 import Banner from "./component/Banner/Banner";
 import Footer from "./component/Footer/Footer";
 
-// import { useHistory } from "react-router-dom";
-// import history from './history';
 
 const App = () => {
     return (
         <Router  >
             <Header />
             <Switch>
-                <Route exact path="/Blog-ReactApp" component={Banner} />
+                <Route exact path="/" component={Banner} />
                 <Route exact path="/post" component={Post} />
                 <Route exact path="/register" component={Registiration} />
                 <Route exact path="/login" component={LoginForm} />
