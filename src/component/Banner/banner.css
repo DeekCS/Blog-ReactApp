@@ -5,15 +5,19 @@
     background-size: cover;
     position: relative;
 }
+
 .scrolled-offset {
     margin-top: 70px;
 }
+
 .align-items-center {
-    align-items: center!important;
+    align-items: center !important;
 }
+
 .d-flex {
-    display: flex!important;
+    display: flex !important;
 }
+
 section {
     padding: 60px 0;
     overflow: hidden;
@@ -28,7 +32,8 @@ section {
     left: 0;
     right: 0;
 }
-#hero  h1 {
+
+#hero h1 {
     margin: 0 0 10px 0;
     font-size: 48px;
     font-weight: 700;
@@ -36,6 +41,7 @@ section {
     text-transform: uppercase;
     color: #fff;
 }
+
 #hero h2 {
     color: #eee;
     margin-bottom: 30px;
@@ -60,26 +66,32 @@ a {
     border: 2px solid #fff;
     color: #fff;
 }
+
 #hero .overlay .btn-get-started:hover {
     background: #cc1616;
     border-color: #cc1616;
 }
+
 @media (min-width: 1024px) {
     #hero {
         background-attachment: fixed;
     }
 }
+
 @media (max-width: 768px) {
     #hero {
         text-align: center;
     }
+
     #hero .overlay .container {
         padding-top: 40px;
     }
+
     #hero h1 {
         font-size: 28px;
         line-height: 36px;
     }
+
     #hero h2 {
         font-size: 18px;
         line-height: 24px;

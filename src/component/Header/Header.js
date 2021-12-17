@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link,useHistory  } from "react-router-dom";
 import Navigation from "./Header.styled";
+import withRouter from "react-router-dom/es/withRouter";
 
 
 
 const Nav = () => {
+    let history = useHistory ();
+
     const [isExpanded, setIsExpanded] = useState(true);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -15,6 +18,7 @@ const Nav = () => {
 
     const handleLogout = () => {
         setIsLoggedIn(false);
+        history.push("/login");
     }
 
     useEffect(() => {
@@ -65,4 +69,4 @@ const Nav = () => {
         );
     }
 
-export default Nav;
+export default withRouter( Nav);
