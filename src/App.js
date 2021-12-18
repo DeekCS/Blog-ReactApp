@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Post from "./component/Post/Post";
 import './App.css';
 import Header from "./component/Header/Header";
-import Registration from "./component/Login/Registration";
+import Registration from "./component/Login/RegistrationForm";
 import LoginForm from "./component/Login/LoginForm";
 import Banner from "./component/Banner/Banner";
 import Footer from "./component/Footer/Footer";

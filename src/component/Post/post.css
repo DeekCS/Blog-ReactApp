@@ -40,20 +40,25 @@ input[type="text"], input[type="email"], textarea,  button {
     color: #fff;
     font-size: 16px;
     font-weight: 300;
-    width: 400px;
+    width: 100%;
+}
+.post-div,.comment-time{
+    color:#000;
+    line-height: 2;
+    font-size:1.2rem;
 }
 
-/*.post p{*/
-/*    margin-top: 1rem;*/
-/*    !*display: inline-block;*!*/
-/*    font-size:1.5em;*/
-/*    font-weight: 500;*/
-/*    color: #fff;*/
-/*    text-transform: uppercase;*/
-/*}*/
-
-.far{
+.icon-post{
     color: #fff;
     font-size: 1.5em;
     margin: 0.5em;
+    cursor: pointer;
+
+}
+.icon-post:hover{
+    color: #fff;
+    font-size: 1.5em;
+    margin: 0.5em;
+    cursor: pointer;
+    opacity: 0.5;
 }

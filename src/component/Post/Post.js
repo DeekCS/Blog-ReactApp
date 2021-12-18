@@ -1,163 +1,121 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 // import Comment from "../Comment/Comment";
 import CommentApp from "../Comment/CommentApp";
 import './post.css'
 
-class Post extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-            act: 0,
-            index: '',
-            description: '',
+
+const Post = () => {
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [author, setAuthor] = useState('');
+    const [likes, setLikes] = useState(0);
+    const [datas, setDatas] = useState([]);
+
+    const handleChange = (e) => {
+      const {name, value} = e.target;
+      if (name === 'title') {
+        setTitle(value);
+      } else if (name === 'description') {
+        setDescription(value);
+      } else if (name === 'name') {
+        setAuthor(value);
+      }
+    }
+
+    const handleLikes = () => {
+      setLikes(likes + 1);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (title === '' || description === ''){
+            alert('Please fill all the fields');
+            return false;
+        }
+        let data = {
+            title,
+            description,
             name: '',
             likes: 0,
-            datas: []
+            comments: []
         }
+        localStorage.setItem('data', JSON.stringify(datas));
+        setDatas([...datas, data]);
+        console.log(datas);
+
+
+        setTitle('');
+        setDescription('');
+        setAuthor('');
+        console.log(data)
     }
 
-    handleChange = (e) => {
-        const {name, value} = e.target;
-        this.setState({
-            [name]: value
-        })
-    }
-
-    like = () => {
-        if (this.state.likes === 0) {
-            this.setState({
-                likes: this.state.likes + 1
-            })
-        } else {
-            alert("You have liked this post")
+    useEffect(() => {
+        let data = localStorage.getItem('data');
+        if(data !== null){
+            setDatas(JSON.parse(data));
         }
+    }, [])
 
-    }
+    //delete the post after clicking delete button
 
-
-    // for pushing data to array
-    handleSubmit = (e) => {
-        e.preventDefault();
-        // if user is not logged in cannot post
-        let user = JSON.parse(localStorage.getItem('users'));
-        if(user === null) {
-            alert("You are not logged in, Please Login To Post")
-            this.props.history.push('/register')
-        }else {
-            const {act, index, description, name, title, likes} = this.state;
-            const data = {act, index, description, name, title, likes};
-            this.setState({
-                datas: [...this.state.datas, data],
-            })
-            this.state.datas.push({act, index, description, name, title, likes})
-            localStorage.setItem('data', JSON.stringify(this.state.datas))
-            e.target.reset();
-            localStorage.setItem('data', JSON.stringify(this.state.datas))
-        }
-
-    }
-
-    //make the posts still visible after refresh
-
-    componentDidMount() {
-        const data = JSON.parse(localStorage.getItem('data'));
-        if (data) {
-            this.setState({
-                datas: data
-            })
-        }
-    }
-
-    // delete the post after clicking delete button
-    deletePost = (index) => {
-        const data = JSON.parse(localStorage.getItem('data'));
+    const handleDelete = (index) => {
+        let data = JSON.parse(localStorage.getItem('data'));
         data.splice(index, 1);
-        this.setState({
-            datas: data
-        })
-        localStorage.setItem('data', JSON.stringify(data))
+        localStorage.setItem('data', JSON.stringify(data));
+        setDatas(data);
     }
 
-    //render user name if user is logged in
-    renderName = () => {
-        //get the user name from local storage
-        const user = JSON.parse(localStorage.getItem('users'));
-        if (user) {
-            return (
-                <div className="user-name">
-                    <h3>{user[0].username}</h3>
-                </div>
-            )
-        }else {
-            return (
-                <div className="user-name">
-                    <h3>Guest</h3>
-                </div>
-            )
-        }
-    }
+    return (
+        <div className="container">
+            <h1 className="text-center">Posts</h1>
+            {/*<h2>{this.renderName}</h2>*/}
+            <form className="form" onSubmit={handleSubmit}>
+                <h2 className="heading ">Add a Post</h2>
+                <input type="text" placeholder="Enter your post title" name="title" onChange={handleChange}
+                       required/> <br/>
+                <input type="text" name="name" placeholder="Enter Your Name" onChange={handleChange} required/>
+                <br/>
+                <textarea name="description" placeholder="Your Post Here" onChange={handleChange} required/>
+                <br/>
 
+                <button type="submit">Submit</button>
+            </form>
+            <ul>
+                {(datas.length > 0) ? datas.map((data, index) => {
+                    console.log(data.name + 'name');
+                        return (
+                            <div className="post" key={index}>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <p>title: {data.title}</p>
+                                            <p>content: {data.description}</p>
+                                            {/*<p>Author: {data.name }</p>*/}
+                                            <hr/>
+                                        </td>
+                                        <td>
+                                            <i onClick={handleLikes} className="far fa-thumbs-up icon-post">{data.likes+1}</i>
+                                            <i onClick={handleDelete} className="far fa-trash-alt icon-post"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p>Add Comment:</p>
+                                            <CommentApp className="comment" index={index}/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        )
+                    }
+                ) : <p>No Posts Right Now, Add new post to show !</p>}
+            </ul>
 
-    render() {
-        //get user name from local storage
-        // const user = JSON.parse(localStorage.getItem('users'));
-        // console.log(user[0].username)
-
-        return (
-            <div className="container">
-                <h1 className="text-center">Posts</h1>
-                <h2>{this.renderName}</h2>
-                <form className="form" onSubmit={this.handleSubmit}>
-                    <h2 className="heading ">Add a Post</h2>
-                    <input type="text" placeholder="Enter your post title" name="title" onChange={this.handleChange}
-                           required/> <br/>
-                    <input type="text" name="name" placeholder="Enter Your Name" onChange={this.handleChange} required/>
-                    <br/>
-                    <textarea name="description" placeholder="Your Post Here" onChange={this.handleChange} required/>
-                    <br/>
-
-
-                    <button type="submit">Submit</button>
-                </form>
-                <ul>
-                    {(this.state.datas.length > 0) ? this.state.datas.map((data, index) => {
-                            return (
-                                <div className="post" key={index}>
-                                    <table>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <p>title: {data.title}</p>
-                                                <p>content: {data.description}</p>
-                                                <p>Author: {data.name}</p>
-                                                <hr/>
-                                            </td>
-                                            <td>
-                                                <i onClick={this.like} className="far fa-thumbs-up">{this.state.likes}</i>
-                                                <i onClick={this.deletePost} className="far fa-trash-alt"/>
-                                            </td>
-
-
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <p>Add Comment:</p>
-                                                <CommentApp className="comment" index={index}/>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )
-                        }
-                    ) : <p>No Posts Right Now, Add new post to show !</p>}
-                </ul>
-
-            </div>
-        );
-    }
+        </div>
+    );
 }
-
 export default Post;

@@ -1,20 +1,31 @@
-import React, { useEffect,useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 const USERNAME = '__comment-app-username__';
+const COMMENT = '__comment-comments__';
 
 
-const CommentInput = ({onAddComment}) => {
+const CommentInput = () => {
     const [username, setUsername] = useState('');
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
         const savedUsername = localStorage.getItem(USERNAME);
-              if (savedUsername) {
+        if (savedUsername) {
             setUsername(savedUsername);
-
             console.log(savedUsername + ' is saved');
         }
+
+    }, []);
+
+
+    useEffect(() => {
+        const savedComments = localStorage.getItem(COMMENT);
+        if (savedComments) {
+            setComments(JSON.parse(savedComments));
+            console.log(JSON.parse(savedComments) + 'comment is saved');
+        }
+
 
     }, []);
 
@@ -23,167 +34,82 @@ const CommentInput = ({onAddComment}) => {
         const newComment = {
             username,
             comment,
-            date: new Date().toLocaleString()
+            commentTime: new Date().toLocaleString()
         };
-
-        setComments([...comments, newComment]);
-        setComment('');
-
-        onAddComment(newComment);
-
-
-
-    };
-
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-        localStorage.setItem(USERNAME, e.target.value);
-        console.log(e.target.value);
-    };
-
-    const handleCommentChange = (e) => {
-        setComment(e.target.value);
-    };
-
-    const handleComment = (e) => {
         if (!username) {
-            alert('Please enter your name');
+            alert("Enter username");
             return false;
         }
         if (!comment) {
-            alert('Please enter your comment');
+            alert("Enter Comment");
             return false;
         }
-        //
-    }
+        setComments([...comments, newComment]);
+        setComment('');
+        localStorage.setItem(COMMENT, JSON.stringify(comments));
+    };
+
+
+    const handleDelete = (index) => {
+        const newComments = [...comments];
+        newComments.splice(index, 1);
+        setComments(newComments);
+        localStorage.setItem(COMMENT, JSON.stringify(newComments));
+    };
+
+
+    const handleChange = (e) => {
+        const {value, name} = e.target;
+        if (name === 'username') {
+            setUsername(value);
+            localStorage.setItem(USERNAME, value);
+        } else {
+            setComment(value);
+        }
+    };
 
     return (
-        <div className="comment-input">
+        <div>
             <form onSubmit={handleSubmit}>
-                <div className="comment-input__field">
+                <div>
                     <label htmlFor="username">Username</label>
                     <input
                         type="text"
-                        id="username"
                         name="username"
+                        id="username"
                         value={username}
-                        onChange={handleUsernameChange}
+                        placeholder={'Enter username'}
+                        onChange={handleChange}
                     />
                 </div>
-                <div className="comment-input__field">
+                <div>
                     <label htmlFor="comment">Comment</label>
                     <textarea
-                        id="comment"
                         name="comment"
+                        id="comment"
                         value={comment}
-                        onChange={handleCommentChange}
+                        placeholder="Enter your comment"
+                        onChange={handleChange}
                     />
                 </div>
-                <div className="comment-input__field">
-                    <button type="submit">Add comment</button>
-                </div>
+                <button type="submit">Submit</button>
             </form>
+            {
+                comments.map((comment, index) => {
+                    return (
+                        <div key={index}>
+                            <span className="post-div">{comment.username} :</span> <br/>
+                            <span className="post-div">{comment.comment}</span> <br/>
+                            <span className='comment-time fr'>{comment.commentTime}</span><br/>
+                            <button onClick={() => handleDelete(index)}>Delete</button>
+                        </div>
+                    )
+                })
+            }
         </div>
     );
 
+};
 
-
-}
-// class CommentInput extends Component {
-//     constructor() {
-//         super();
-//         this.state = {
-//             username: '',
-//             comment: ''
-//         };
-//     }
-//
-//     componentWillMount() {
-//         this._loadUsername();
-//     }
-//
-//     componentDidMount() {
-//         if (this.state.username) this.textarea.focus();
-//     }
-//
-//     _saveUsername() {
-//         localStorage.setItem(USERNAME, this.state.username);
-//     }
-//
-//     _loadUsername() {
-//         const username = localStorage.getItem(USERNAME);
-//         if (username) this.setState({ username });
-//     }
-//
-//     handleUsernameChange = (evt) => {
-//         this.setState({
-//             username: evt.target.value
-//         });
-//     }
-//
-//     handleUsernameBlur = () => {
-//         this._saveUsername();
-//     }
-//
-//     handleCommentChange = (evt) => {
-//         this.setState({
-//             comment: evt.target.value
-//         });
-//     }
-//
-//     handleComment = () => {
-//         const { username, comment } = this.state;
-//         if (!username) {
-//             alert("please enter user name");
-//             return false;
-//         }
-//         if (!comment) {
-//             alert("Please enter the content of the comment");
-//             this.textarea.focus();
-//             return false;
-//         }
-//         this.props.onAddComment({
-//             username,
-//             comment,
-//             createTime: +new Date()
-//         });
-//
-//         this.setState({ comment: '' });
-//     }
-//
-//     render() {
-//         const { username, comment } = this.state;
-//
-//         return (
-//             <div className="comment-input-wrap border">
-//                 <div className="username">
-//                     <label>username:</label>
-//                     <input
-//                         type="text"
-//                         className="border"
-//                         value={username}
-//                         onChange={this.handleUsernameChange}
-//                         onBlur={this.handleUsernameBlur}
-//                     />
-//                 </div>
-//                 <div className="comment">
-//                     <label>Enter comment</label>
-//                     <textarea
-//                         className="border btn btn-normal pull-right"
-//                         ref={(textarea) => (this.textarea = textarea)}
-//                         value={comment}
-//                         onChange={this.handleCommentChange}
-//                     />
-//                 </div>
-//                 <div className="release clearfix">
-//                     <button className="" onClick={this.handleComment}>add</button>
-//                 </div>
-//             </div>
-//         );
-//     }
-// }
-/*
-
-
- */
 export default CommentInput;
+
