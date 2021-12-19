@@ -70,9 +70,9 @@ const CommentInput = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form className="" onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="username">Username</label>
+                    <label  className="comment-label" htmlFor="username">Username</label>
                     <input
                         type="text"
                         name="username"
@@ -83,7 +83,7 @@ const CommentInput = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="comment">Comment</label>
+                    <label className="comment-label" htmlFor="comment">Comment</label>
                     <textarea
                         name="comment"
                         id="comment"

@@ -22,14 +22,15 @@ const Post = () => {
         }
     }
 
+    //handle like on click the post will increase by 1
     const handleLikes = () => {
-        if (likes === 0) {
-            setLikes(1);
-        } else {
-            setLikes(0);
-        }
+       if(likes === 0){
+           setLikes(likes + 1);
+       }
+       else {
+           setLikes(likes - 1);
+       }
     }
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -84,18 +85,21 @@ const Post = () => {
             <ul>
                 {(datas.length > 0) ? datas.map((data, index) => {
                     console.log(data.name + 'name');
-                    return (<div className="post" key={index}>
-                            <table>
+                    return (<div className="container" key={index}>
+                            <table className="">
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <p>title: {data.title}</p>
-                                        <p>content: {data.description}</p>
+                                        <h2 className="post-title">Title:</h2>
+                                        <p className="post-content">{data.title}</p> <br/>
+                                        <h2 className="post-title">Description:</h2>
+                                        <p className="post-content">{data.description}</p> <br/>
+                                        {/*<p>content: {data.description}</p>*/}
                                         {/*<p>Author: {data.name }</p>*/}
                                         <hr/>
                                     </td>
                                     <td>
-                                        <i id="like" onClick={handleLikes} name="likes"
+                                        <i id="like" onClick={handleLikes}  name="likes"
                                            className="far fa-thumbs-up icon-post">{likes}</i>
                                         <i onClick={handleDelete} className="far fa-trash-alt icon-post"/>
                                     </td>
