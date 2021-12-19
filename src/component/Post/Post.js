@@ -12,33 +12,33 @@ const Post = () => {
     const [datas, setDatas] = useState([]);
 
     const handleChange = (e) => {
-      const {name, value} = e.target;
-      if (name === 'title') {
-        setTitle(value);
-      } else if (name === 'description') {
-        setDescription(value);
-      } else if (name === 'name') {
-        setAuthor(value);
-      }
+        const {name, value} = e.target;
+        if (name === 'title') {
+            setTitle(value);
+        } else if (name === 'description') {
+            setDescription(value);
+        } else if (name === 'name') {
+            setAuthor(value);
+        }
     }
 
     const handleLikes = () => {
-      setLikes(likes + 1);
+        if (likes === 0) {
+            setLikes(1);
+        } else {
+            setLikes(0);
+        }
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (title === '' || description === ''){
+        if (title === '' || description === '') {
             alert('Please fill all the fields');
             return false;
         }
         let data = {
-            title,
-            description,
-            name: '',
-            likes: 0,
-            comments: []
+            title, description, name: '', likes: 0, comments: []
         }
         localStorage.setItem('data', JSON.stringify(datas));
         setDatas([...datas, data]);
@@ -53,7 +53,7 @@ const Post = () => {
 
     useEffect(() => {
         let data = localStorage.getItem('data');
-        if(data !== null){
+        if (data !== null) {
             setDatas(JSON.parse(data));
         }
     }, [])
@@ -67,8 +67,7 @@ const Post = () => {
         setDatas(data);
     }
 
-    return (
-        <div className="container">
+    return (<div className="container">
             <h1 className="text-center">Posts</h1>
             {/*<h2>{this.renderName}</h2>*/}
             <form className="form" onSubmit={handleSubmit}>
@@ -85,37 +84,34 @@ const Post = () => {
             <ul>
                 {(datas.length > 0) ? datas.map((data, index) => {
                     console.log(data.name + 'name');
-                        return (
-                            <div className="post" key={index}>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <p>title: {data.title}</p>
-                                            <p>content: {data.description}</p>
-                                            {/*<p>Author: {data.name }</p>*/}
-                                            <hr/>
-                                        </td>
-                                        <td>
-                                            <i onClick={handleLikes} className="far fa-thumbs-up icon-post">{data.likes+1}</i>
-                                            <i onClick={handleDelete} className="far fa-trash-alt icon-post"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p>Add Comment:</p>
-                                            <CommentApp className="comment" index={index}/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        )
-                    }
-                ) : <p>No Posts Right Now, Add new post to show !</p>}
+                    return (<div className="post" key={index}>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <p>title: {data.title}</p>
+                                        <p>content: {data.description}</p>
+                                        {/*<p>Author: {data.name }</p>*/}
+                                        <hr/>
+                                    </td>
+                                    <td>
+                                        <i id="like" onClick={handleLikes} name="likes"
+                                           className="far fa-thumbs-up icon-post">{likes}</i>
+                                        <i onClick={handleDelete} className="far fa-trash-alt icon-post"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Add Comment:</p>
+                                        <CommentApp className="comment" index={index}/>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>)
+                }) : <p>No Posts Right Now, Add new post to show !</p>}
             </ul>
 
-        </div>
-    );
+        </div>);
 }
 export default Post;
